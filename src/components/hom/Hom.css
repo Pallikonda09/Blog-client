@@ -1,0 +1,244 @@
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #070705;
+  position: fixed; 
+  top: 0; 
+  left: 0;
+  width: 100%;
+  
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  height: 60px; 
+}
+
+.content {
+  padding-top: 60px; 
+}
+
+/* Initial hidden state for the sections */
+.feature-card, .testimonial {
+  opacity: 0;
+  transform: translateY(50px); /* or any other effect */
+  transition: opacity 1.5s ease, transform 1.5s ease;
+}
+
+/* Visible state when the section comes into view */
+.feature-card.visible, .testimonial.visible {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible; /* Ensure it's always visible once it's in view */
+}
+
+
+
+
+
+
+/* Hero Section */
+
+.content {
+  padding-top: 60px; 
+}
+
+
+
+/* Hero Section */
+.hero-section {
+
+  padding: 50px;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.hero-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 20px 30px;
+
+
+}
+
+.hero-text h1 {
+  font-size: 3em;
+  color: #343a405e;
+  animation: fadeInUp 1.2s ease-out;
+
+}
+
+.hero-text p {
+  font-size: 1.2em;
+  color: #495057;
+  margin: 20px 0;
+  animation: fadeInUp 1.5s ease-out;
+
+}
+
+.hero-image img {
+  max-width: 100%;
+  border-radius: 15px;
+  animation: zoomIn 1s ease-in-out;
+  margin: 10px;
+  object-fit: contain !important;
+}
+
+.cta-button {
+  background: #17a2b8;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  animation: fadeInUp 1.8s ease-out;
+}
+
+.cta-button:hover {
+  background: #138496;
+}
+
+/* Features Section */
+.features-section {
+  padding: 50px 20px;
+  text-align: center;
+  background: #f8f9fa;
+}
+
+.features-section h2 {
+  font-size: 2.5em;
+  margin-bottom: 40px;
+  color: #343a40;
+}
+
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.feature-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  text-align: center;
+  padding: 20px;
+  max-width: 300px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.feature-card img {
+  max-width: 80px;
+  margin-bottom: 15px;
+  transition: transform 0.3s ease;
+  border-radius: 20px;
+  box-shadow: inset;
+}
+
+.feature-card:hover img {
+  transform: rotate(10deg) scale(1.1);
+}
+
+.feature-card h3 {
+  font-size: 1.5em;
+  color: #343a40;
+  margin-bottom: 10px;
+}
+
+.feature-card p {
+  font-size: 1em;
+  color: #6c757d;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .features {
+    flex-direction: column;
+  }
+}
+
+
+/* Testimonials Section */
+.testimonial-section {
+  padding: 40px;
+  background: #f1f3f5;
+  text-align: center;
+}
+
+.testimonials {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 600px;
+  margin: auto;
+}
+
+.testimonial {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+}
+
+.testimonial h4 {
+  margin-top: 15px;
+  font-size: 1.1em;
+  color: #495057;
+}
+
+
+/* Call-to-Action Section */
+.cta-section {
+  padding: 50px 20px;
+  background: linear-gradient(135deg, #4caf50, #81c784);
+  color: #fff;
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+

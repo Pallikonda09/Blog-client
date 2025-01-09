@@ -1,0 +1,202 @@
+/* General Layout */
+.container-adii {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #fff5f7, #f9f6f4);
+  overflow: hidden;
+  position: relative;
+}
+
+.container-fluid {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #fff5f7, #f9f6f4);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Login Box */
+.Register-box {
+  width: 400px;
+  padding: 40px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  animation: slideInFromRight 1.0s ease-out forwards;
+  transform: translateX(100%);
+  z-index: 2;
+  background-image: url("../Images/unnamed.png");  /* Replace with your image path */
+  /* background-size: cover;
+  background-position: center; */
+}
+
+/* Title */
+.register-box h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2em;
+  color: #d8c4c4;
+  animation: fadeInBounce 1.8s ease-out forwards;
+  opacity: 0;
+}
+
+/* Role Selection Section */
+.role-selection {
+  margin: 20px 0;
+}
+
+.role-label {
+  font-size: 2em;
+  color: #333;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.role-options {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.role-options label {
+  font-size: 1.2em;
+  color: #130e12;
+  cursor: pointer;
+}
+
+.role-options input[type="radio"] {
+  margin-right: 4px;
+}
+
+/* Input Fields */
+.input-group {
+  position: relative;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px 10px 10px 5px;
+  font-size: 1em;
+  border: none;
+  border-bottom: 2px solid #aaa;
+  outline: none;
+  background: transparent;
+  transition: border-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+  color: #333;
+}
+
+.input-group label {
+  position: absolute;
+  top: 10px;
+  left: 5px;
+  font-size: 1em;
+  color: #050404;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.input-group input:focus {
+  border-bottom: 2px solid #1a1a19;
+}
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+  top: -15px;
+  font-size: 0.8em;
+  color: #1a1a1a;
+}
+
+
+
+
+
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+
+/* Submit Button */
+button {
+  width: 100%;
+  padding: 10px;
+  background: #4ff0f6;
+  border: none;
+  border-radius: 25px;
+  color: #fff;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #8be119;
+}
+
+/* Register Text and Link */
+.register-text {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.9em;
+  color: #666;
+}
+
+.register-text a {
+  color: #e73d6a;
+  text-decoration: none;
+}
+
+.register-text a:hover {
+  text-decoration: underline;
+}
+
+
+/* Error Message */
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.text-danger {
+  color: red;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+/* Slide In Animation */
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Fade In Bounce Animation */
+@keyframes fadeInBounce {
+  0% {
+    opacity: 0;
+    transform: translateY(-70px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(4px);
+  }
+}

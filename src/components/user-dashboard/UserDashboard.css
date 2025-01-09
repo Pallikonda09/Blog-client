@@ -1,0 +1,36 @@
+/* Main container for the layout */
+.dashboard-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  /* Navbar should stay at the top */
+  .dashboard-layout header {
+    flex-shrink: 0;
+  }
+  
+  /* Main content area */
+  .dashboard-content {
+    flex: 1; /* Takes up all available space between header and footer */
+    padding: 20px;
+    background-color: #f9f9f9;
+    overflow-y: auto; /* Ensures content doesn't overflow */
+  }
+  
+  /* Footer should stay at the bottom */
+  .dashboard-layout footer {
+    flex-shrink: 0;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .dashboard-content {
+      padding: 10px;
+    }
+  }
+  

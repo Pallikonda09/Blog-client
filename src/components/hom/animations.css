@@ -1,0 +1,43 @@
+/* animations.css */
+
+/* Ensure sections have proper positioning */
+.features-section, .testimonial-section {
+    padding: 40px 20px;
+    margin-top: 50px;
+    opacity: 0; /* Initially hidden */
+    transform: translateY(50px); /* Start slightly lower */
+    transition: opacity 2.5s ease-out, transform 2.5s ease-out; /* Smooth transition */
+    position: relative; /* Ensure proper stacking */
+  }
+  
+  .in-view {
+    opacity: 1; /* Fully visible when in view */
+    transform: translateY(0); /* Move back to its normal position */
+  }
+  
+  /* For feature cards */
+  .feature-card {
+    opacity: 0; /* Initially hidden */
+    transform: translateY(50px); /* Start slightly off-screen */
+    transition: opacity 3.5s ease-out, transform 3.5s ease-out; /* Smooth transition */
+    position: relative; /* Ensure proper stacking */
+  }
+  
+  .feature-card.in-view {
+    opacity: 1; /* Fully visible when in view */
+    transform: translateY(0); /* Move back to its normal position */
+  }
+  
+  /* For testimonials */
+  .testimonials .testimonial {
+    opacity: 0; /* Initially hidden */
+    transform: translateY(50px); /* Start slightly off-screen */
+    transition: opacity 2.5s ease-out, transform 2.5s ease-out; /* Smooth transition */
+    position: relative; /* Ensure proper stacking */
+  }
+  
+  .testimonial.in-view {
+    opacity: 1; /* Fully visible when in view */
+    transform: translateY(0); /* Move back to its normal position */
+  }
+  
