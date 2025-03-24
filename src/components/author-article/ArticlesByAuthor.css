@@ -1,0 +1,20 @@
+.author-read-more {
+    display: inline-block;
+    background-color: #007bff; /* Bootstrap primary color */
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+  }
+  
+  .author-read-more:hover {
+    background-color: #0056b3;
+  }
+
+  /* Make deleted articles look grayed out */
+.deleted-article {
+  background-color: #f8f9fa; /* Light gray background */
+  opacity: 0.7; /* Make it look faded */
+}
+
+  

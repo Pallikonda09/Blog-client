@@ -1,125 +1,93 @@
-// import './App.css';
-// import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-// import Rootlayout from './Rootlayout';
-// import Hom from './components/hom/Hom';
-// import Register from './components/register/Register';
-// import Login from './components/login/Login';
-// import { Navigate } from 'react-router-dom'; // Import Navigate for redirection
-// import UserDashboard from './components/user-dashboard/UserDashboard';
-// import AuthorDashboard from './components/author-dashboard/AuthorDashboard.js';
 
 
-// function App() {
-//   // Create browser router
-//   const router = createBrowserRouter([
-//     {
-//       path: '/',
-//       element: <Rootlayout />,
-//       children: [
-//         {
-//           path: '/',  // Redirect root path to home
-//           element: <Navigate to="/home" />, 
-//         },
-//         {
-//           path: 'home',
-//           element: <Hom />,
-//         },
-//         {
-//           path: 'register',
-//           element: <Register />,
-//         },
-//         {
-//           path: 'login',
-//           element: <Login />,
-//           children:[
-//                       {
-//                         path:"User-dashboard",
-//                         element:<UserDashboard/> 
-//                       },
-                       
-//                       {
-//                         path:"Author-dashboard",
-//                         element:<AuthorDashboard/>
-//                       }
-
-//           ]
-//         },
-//       ],
-//     },
-//   ]);
-
-//   return (
-//     <div>
-//       {/* Provide browser router to the application */}
-//       <RouterProvider router={router} />
-//     </div>
-//   );
-// }
-
-// export default App;
-
-
-import './App.css';
-import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
-import Rootlayout from './Rootlayout';
-import Hom from './components/hom/Hom';
-import Register from './components/register/Register';
-import Login from './components/login/Login';
-import UserDashboard from './components/user-dashboard/UserDashboard';
-import AuthorDashboard from './components/author-dashboard/AuthorDashboard';
-
-
+import React from "react";
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";  
+import "react-toastify/dist/ReactToastify.css";  
+import RootLayout from "./Rootlayout";
+import Hom from "./components/hom/Hom";
+import Register from "./register/Register";
+import Login from "./components/login/Login";
+import AuthorDashboard from "./components/author-dashboard/AuthorDashboard";
+import UserDashboard from "./components/user-dashboard/UserDashboard";
+import AddArticle from "./components/write-aritcle/AddArticle";
+import ArticlesByAuthor from "./components/author-article/ArticlesByAuthor";
+import ArticleDetail from "./components/article-details/ArticleDetail";
+import EditArticle from "./components/edit-articles/EditArticle";
+import AuthorProfile from "./components/author-profile/AuthorProfile";
 
 
 function App() {
-  
- 
-
-
-  // Create browser router
-  const router = createBrowserRouter([ 
-
-
+  const router = createBrowserRouter([
     {
-      path: '/',
-      element: <Rootlayout />,
+      element: <RootLayout />,
       children: [
         {
-          path: '/', // Redirect root path to home
-          element: <Navigate to="/home" />,
+          path: "/",
+          element: <Navigate to="/home" replace />, 
         },
         {
-          path: 'home',
+          path: "home",
           element: <Hom />,
         },
         {
-          path: 'register',
+          path: "register",
           element: <Register />,
         },
         {
-          path: 'login',
+          path: "login",
           element: <Login />,
         },
         {
-          path: 'user-dashboard', // Independent route for UserDashboard
-          element: <UserDashboard /> 
+          path: "user-dashboard",
+          element: <UserDashboard />,
+         
+        },
+        { path: "article-detail", element: <ArticleDetail /> },
+        {
+          path: "author-dashboard",
+          element: <AuthorDashboard />,
+          children: [
+            {
+              path: "view-articles",
+              element: <ArticlesByAuthor />,
+            },
+            {
+              path: "create-article",
+              element: <AddArticle />,
+            },
+          ],
         },
         {
-          path:'author-dashboard',
-          element:<AuthorDashboard/>
-        }
-       
+          path: "article/:articleId", 
+          element: <ArticleDetail />,
+        },
+        {
+          path: "author-dashboard/article/:articleId", 
+          element: <ArticleDetail />,
+        },
+        
+                 
+        { path: "edit-article",
+         element: <EditArticle /> 
+        },
+
+        {
+          path: "author-profile",
+          element: <AuthorProfile/>,
+        },
+
       ],
     },
   ]);
 
-  return (
-    <div>
-      {/* Provide browser router to the application */}
+  return(
+    <>
       <RouterProvider router={router} />
-    </div>
+      <ToastContainer autoClose={2500} /> 
+    </>
   );
+
 }
 
-export default App;
-
+export default App; 

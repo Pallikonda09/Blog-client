@@ -1,0 +1,27 @@
+p{
+    color: black;
+}
+
+.btn.rounded-circle {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .metadata-sidebar {
+    background-color: #f8f9fa; /* Light gray background */
+    padding: 15px;
+    border-radius: 8px;
+  }
+ 
+  @media (max-width: 767px) {
+    .metadata-sidebar {
+      margin-top: 20px; /* Space when stacked on small screens */
+    }
+  }
+
+  a{
+      text-decoration: none;
+  }

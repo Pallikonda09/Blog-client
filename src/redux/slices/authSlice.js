@@ -128,15 +128,14 @@
 // export const { logout } = authSlice.actions;
 // export default authSlice.reducer;
 
-
 import { createSlice } from '@reduxjs/toolkit';
 import { loginUser, loginAuthor } from '../thunks/authThunk';
 
 const initialState = {
-  user: JSON.parse(localStorage.getItem('user')) || null, // Load from localStorage
-  author: JSON.parse(localStorage.getItem('author')) || null, // For author
-  token: localStorage.getItem('token') || null,
-  isAuthenticated: !!localStorage.getItem('token'), // True if token exists
+  user: JSON.parse(localStorage.getItem('user')) || null,  // Load user from localStorage
+  author: JSON.parse(localStorage.getItem('author')) || null,  // Load author from localStorage
+  token: localStorage.getItem('token') || null,  // Load token from localStorage
+  isAuthenticated: !!localStorage.getItem('token'),  // Check if token exists
   loading: false,
   error: null,
 };
@@ -151,11 +150,12 @@ const authSlice = createSlice({
       state.token = null;
       state.isAuthenticated = false;
       state.error = null;
-      localStorage.clear(); // Clear storage on logout
+      localStorage.clear();  // Clear localStorage on logout
     },
   },
   extraReducers: (builder) => {
     builder
+      // Handle user login
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isAuthenticated = true;
         state.user = action.payload.user;
@@ -163,6 +163,7 @@ const authSlice = createSlice({
         localStorage.setItem('user', JSON.stringify(action.payload.user));
         localStorage.setItem('token', action.payload.token);
       })
+      // Handle author login
       .addCase(loginAuthor.fulfilled, (state, action) => {
         state.isAuthenticated = true;
         state.author = action.payload.author;
@@ -175,3 +176,4 @@ const authSlice = createSlice({
 
 export const { logout } = authSlice.actions;
 export default authSlice.reducer;
+

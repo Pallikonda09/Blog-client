@@ -1,36 +1,28 @@
-/* Main container for the layout */
-.dashboard-layout {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+.author-dashboard h2 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.list-group-item i {
+  margin-right: 8px;
+}
+
+.card-body h5 {
+  font-size: 1.2rem;
+  color: #6c757d;
+}
+
+.card-body .display-5 {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .author-dashboard h2 {
+    font-size: 1.5rem;
   }
-  
-  /* Navbar should stay at the top */
-  .dashboard-layout header {
-    flex-shrink: 0;
+
+  .card-body .display-5 {
+    font-size: 2rem;
   }
-  
-  /* Main content area */
-  .dashboard-content {
-    flex: 1; /* Takes up all available space between header and footer */
-    padding: 20px;
-    background-color: #f9f9f9;
-    overflow-y: auto; /* Ensures content doesn't overflow */
-  }
-  
-  /* Footer should stay at the bottom */
-  .dashboard-layout footer {
-    flex-shrink: 0;
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 10px;
-  }
-  
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
-    .dashboard-content {
-      padding: 10px;
-    }
-  }
-  
+}

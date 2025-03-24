@@ -1,39 +1,55 @@
-/* General Layout */
-.container-adii {
+
+/* .container-adii {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(135deg, #fff5f7, #f9f6f4);
+  background: linear-gradient(135deg, #ec0e3b, #f9f6f4);
   overflow: hidden;
   position: relative;
-}
+  
+} */
 
+
+
+/* Initial background color */
 .container-fluid {
   padding: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background: linear-gradient(135deg, #fff5f7, #f9f6f4);
+  height: calc(100vh - 50px); /* Adjusted height to leave space for the navbar */
+  background-color: #f0f4f7; /* Initial background color */
+  transition: background 1s ease; /* Smooth transition for the background */
   overflow: hidden;
   position: relative;
+  margin-top: 50px; /* Add margin if navbar is fixed */
 }
 
+.container-fluid.loaded {
+  background: url(../Images/pngtree-glass-morphim-effect-registration-banner-with-gradient-blue-image_934693.jpg) no-repeat center center !important;
+  background-size: cover; /* Ensures the image covers the entire container */
+}
+
+
+
+
+
 /* Login Box */
-.Register-box {
+ .Register-box {
+  
   width: 400px;
   padding: 40px;
-  background: #ffffff;
+  background: linear-gradient(135deg, #87ceeb, #f0f4f7); 
   border-radius: 12px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  animation: slideInFromRight 1.0s ease-out forwards;
-  transform: translateX(100%);
+  
   z-index: 2;
-  background-image: url("../Images/unnamed.png");  /* Replace with your image path */
-  /* background-size: cover;
-  background-position: center; */
+  
 }
+ 
+  
+
 
 /* Title */
 .register-box h1 {
@@ -200,3 +216,29 @@ button:hover {
     transform: translateY(4px);
   }
 }
+
+
+
+.password-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  
+}
+
+.password-icon {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  color: #0a0b0b;
+  margin-top: 20px;
+}
+
+
+
+
+
+
+
+

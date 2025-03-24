@@ -1,0 +1,180 @@
+/* AuthorProfile.css */
+.author-profile .profile-avatar {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 4px solid #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .author-profile .avatar-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .author-profile .avatar-wrapper {
+    position: relative;
+    display: inline-block;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  
+  .author-profile .avatar-wrapper.editable {
+    cursor: pointer;
+  }
+  
+  .author-profile .default-avatar {
+    width: 150px;
+    height: 150px;
+    background-color: #4e73df;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 4px solid #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .author-profile .avatar-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 8px 0;
+    color: white;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .author-profile .avatar-wrapper:hover .avatar-overlay {
+    opacity: 1;
+  }
+  
+  .author-profile .profile-name {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: 600;
+  }
+  
+  .author-profile .username {
+    color: #6c757d;
+    margin-bottom: 15px;
+  }
+  
+  .author-profile .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  .author-profile .social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: #f8f9fa;
+    color: #495057;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+  
+  .author-profile .social-icon:hover {
+    background-color: #4e73df;
+    color: white;
+    transform: translateY(-3px);
+  }
+  
+  .author-profile .section-title {
+    color: #4e73df;
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
+  
+  .author-profile .profile-bio {
+    line-height: 1.6;
+    color: #495057;
+  }
+  
+  .author-profile .profile-section {
+    margin-bottom: 20px;
+  }
+  
+  .author-profile .skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .author-profile .skill-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    background-color: #e9ecef;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: #495057;
+  }
+  
+  .author-profile .skills-editor {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .author-profile .skill-item {
+    display: inline-flex;
+    align-items: center;
+    background-color: #e9ecef;
+    border-radius: 20px;
+    padding: 5px 10px 5px 15px;
+    font-size: 0.85rem;
+  }
+  
+  .author-profile .skill-item .btn-remove {
+    background: none;
+    border: none;
+    color: #6c757d;
+    margin-left: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+  }
+  
+  .profile-bio {
+    white-space: pre-line;
+  }
+  
+  .author-profile .skill-item .btn-remove:hover {
+    color: #dc3545;
+  }
+  
+  .author-profile .card {
+    border: none;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .author-profile .card-header {
+    border-bottom: none;
+    padding: 15px 20px;
+  }
+  
+  .author-profile .profile-sidebar .card-body {
+    padding: 25px;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .author-profile .profile-avatar,
+    .author-profile .default-avatar {
+      width: 120px;
+      height: 120px;
+    }
+  }

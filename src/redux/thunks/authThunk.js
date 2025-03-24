@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+// Thunk for user login
 export const loginUser = createAsyncThunk(
   'auth/loginUser',
   async ({ username, password, userType }, { rejectWithValue }) => {
@@ -10,26 +11,30 @@ export const loginUser = createAsyncThunk(
         password,
         userType,
       });
-      return response.data; // Success response
+      console.log("User login response:", response.data);  // Log the response data
+      return response.data;  // Ensure the response contains 'username' and 'token'
     } catch (error) {
-      return rejectWithValue(error.response.data); // Error response
+      console.error("User login error:", error.response?.data || error);
+      return rejectWithValue(error.response?.data || { message: 'An error occurred' });
     }
   }
 );
 
- 
-// Thunk to handle author login
+// Thunk for author login
 export const loginAuthor = createAsyncThunk(
   'auth/loginAuthor',
-  async ({ username, password }, { rejectWithValue }) => {
+  async ({ username, password, userType }, { rejectWithValue }) => {
     try {
       const response = await axios.post('http://localhost:4000/author-api/login', {
         username,
         password,
+        userType,
       });
-      return response.data; // Returns the successful login response
+      console.log("Backend Response:", response.data);
+      return response.data;  // Ensure the response includes 'username' and 'token'
     } catch (error) {
-      return rejectWithValue(error.response?.data || { message: "An error occurred" });
+      return rejectWithValue(error.response?.data || { message: 'An error occurred' });
     }
   }
 );
+
