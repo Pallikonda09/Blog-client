@@ -1,5 +1,6 @@
 
 import React, { useEffect, useState, useRef } from "react";
+import { useNavigate } from 'react-router-dom';
 import "./UserDashboard.css";
 // Add Font Awesome import
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -22,21 +23,71 @@ const UserDashboard = () => {
   const tempIdCounter = useRef(0);
   // For responsive design
   const [isMobile, setIsMobile] = useState(window.innerWidth < 769);
+  
+  const navigate = useNavigate();
+
+  // Validate authentication and return user if valid
+  const validateAuth = () => {
+    try {
+      const token = localStorage.getItem("token");
+      const storedUserJson = localStorage.getItem("user");
+      
+      if (!token || !storedUserJson) {
+        console.error("Missing authentication data");
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        navigate('/login');
+        return false;
+      }
+      
+      // Try to parse the user JSON
+      try {
+        const storedUser = JSON.parse(storedUserJson);
+        
+        if (!storedUser || !storedUser.username) {
+          console.error("Invalid user data format");
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          navigate('/login');
+          return false;
+        }
+        
+        setUser(storedUser);
+        return true;
+      } catch (parseError) {
+        console.error("Failed to parse user data:", parseError);
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        navigate('/login');
+        return false;
+      }
+    } catch (error) {
+      console.error("Authentication validation error:", error);
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      navigate('/login');
+      return false;
+    }
+  };
+  
+  // Handle authentication errors in API responses
+  const handleApiAuthError = () => {
+    console.error("Authentication failed during API request");
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate('/login');
+  };
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    const token = localStorage.getItem("token");
-
-    if (!storedUser || !token) {
-      setError("Unauthorized! Please log in.");
-      setLoading(false);
+    // Validate authentication before fetching data
+    if (!validateAuth()) {
       return;
     }
-
-    setUser(storedUser);
-
+    
     const fetchArticles = async () => {
       try {
+        const token = localStorage.getItem("token");
+        
         const response = await fetch("http://localhost:4000/user-api/articles", {
           method: "GET",
           headers: {
@@ -44,11 +95,17 @@ const UserDashboard = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-
+        
         if (!response.ok) {
-          throw new Error("Failed to fetch articles");
+          // Handle different error status codes
+          if (response.status === 401 || response.status === 403) {
+            handleApiAuthError();
+            throw new Error("Session expired. Please log in again.");
+          } else {
+            throw new Error("Failed to fetch articles");
+          }
         }
-
+        
         const data = await response.json();
         
         // Ensure each article has a comments array
@@ -78,7 +135,7 @@ const UserDashboard = () => {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [navigate]);
 
   const handleCommentButtonClick = (articleId) => {
     // Toggle comment section - if already active for this article, close it
@@ -93,86 +150,94 @@ const UserDashboard = () => {
     setEditingCommentId(null);
   };
 
-  // Modify the submitComment function
-const submitComment = async (articleId) => {
-  if (!newComment.trim()) return;
-  
-  setSubmitting(true);
-  
-  try {
-    const token = localStorage.getItem("token");
+  const submitComment = async (articleId) => {
+    if (!newComment.trim()) return;
+    
+    setSubmitting(true);
     
     try {
-      const response = await fetch(`http://localhost:4000/user-api/articles/${articleId}/comment`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ content: newComment }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to post comment");
-      }
-
-      const result = await response.json();
+      const token = localStorage.getItem("token");
       
-      // Ensure the comment has a valid ID before adding it to the state
-      if (!result.comment.commentId) {
-        // Generate a temporary ID if backend doesn't provide one
-        // Use tempIdCounter.current and then increment it
+      try {
+        const response = await fetch(`http://localhost:4000/user-api/articles/${articleId}/comment`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ content: newComment }),
+        });
+
+        if (!response.ok) {
+          if (response.status === 401 || response.status === 403) {
+            handleApiAuthError();
+            throw new Error("Session expired. Please log in again.");
+          }
+          throw new Error("Failed to post comment");
+        }
+
+        const result = await response.json();
+        
+        // Ensure the comment has a valid ID before adding it to the state
+        if (!result.comment.commentId) {
+          // Generate a temporary ID if backend doesn't provide one
+          const tempId = tempIdCounter.current++;
+          result.comment.commentId = `temp-${articleId}-${tempId}`;
+          console.warn("Using temporary comment ID as backend didn't provide one");
+        }
+        
+        // Update articles state with the new comment
+        setArticles(prevArticles => 
+          prevArticles.map(article => 
+            article.articleId === articleId 
+              ? { 
+                  ...article, 
+                  comments: [...article.comments, result.comment]
+                } 
+              : article
+          )
+        );
+      } catch (apiError) {
+        console.error("API error:", apiError);
+        
+        // Check if this was an auth error
+        if (apiError.message.includes("Session expired")) {
+          // Already handled by handleApiAuthError
+          throw apiError; 
+        }
+        
+        // Fallback: Add comment to local state only
         const tempId = tempIdCounter.current++;
-        result.comment.commentId = `temp-${articleId}-${tempId}`;
-        console.warn("Using temporary comment ID as backend didn't provide one");
+        const newCommentObj = {
+          commentId: `temp-${articleId}-${tempId}`,
+          content: newComment,
+          createdAt: new Date().toISOString(),
+          userId: user.userId,
+          username: user.username
+        };
+        
+        setArticles(prevArticles => 
+          prevArticles.map(article => 
+            article.articleId === articleId 
+              ? { 
+                  ...article, 
+                  comments: [...article.comments, newCommentObj]
+                } 
+              : article
+          )
+        );
+        
+        console.log("Added comment to local state only");
       }
-      
-      // Update articles state with the new comment
-      setArticles(prevArticles => 
-        prevArticles.map(article => 
-          article.articleId === articleId 
-            ? { 
-                ...article, 
-                comments: [...article.comments, result.comment]
-              } 
-            : article
-        )
-      );
-    } catch (apiError) {
-      console.error("API error:", apiError);
-      
-      // Fallback: Add comment to local state only
-      const tempId = tempIdCounter.current++;
-      const newCommentObj = {
-        commentId: `temp-${articleId}-${tempId}`,
-        content: newComment,
-        createdAt: new Date().toISOString(),
-        userId: user.userId,
-        username: user.username
-      };
-      
-      setArticles(prevArticles => 
-        prevArticles.map(article => 
-          article.articleId === articleId 
-            ? { 
-                ...article, 
-                comments: [...article.comments, newCommentObj]
-              } 
-            : article
-        )
-      );
-      
-      console.log("Added comment to local state only");
-    }
 
-    // Clear the comment input
-    setNewComment("");
-  } catch (error) {
-    setError(error.message);
-  } finally {
-    setSubmitting(false);
-  }
-};
+      // Clear the comment input
+      setNewComment("");
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   const handleLike = async (articleId) => {
     try {
@@ -188,6 +253,10 @@ const submitComment = async (articleId) => {
         });
 
         if (!response.ok) {
+          if (response.status === 401 || response.status === 403) {
+            handleApiAuthError();
+            throw new Error("Session expired. Please log in again.");
+          }
           throw new Error("Failed to like article");
         }
 
@@ -201,6 +270,12 @@ const submitComment = async (articleId) => {
         );
       } catch (apiError) {
         console.error("API error:", apiError);
+        
+        // Check if this was an auth error
+        if (apiError.message.includes("Session expired")) {
+          // Already handled by handleApiAuthError
+          throw apiError; 
+        }
         
         // Fallback: Update like in local state only
         setArticles(prevArticles => 
@@ -230,51 +305,122 @@ const submitComment = async (articleId) => {
     setEditedCommentContent("");
   };
 
-  // Save edited comment - Client-side only version
+  // Save edited comment
   const handleSaveComment = async (articleId, commentId) => {
     if (!editedCommentContent.trim()) return;
     
-    // Skip API call and just update local state
-    setArticles(prevArticles => 
-      prevArticles.map(article => 
-        article.articleId === articleId 
-          ? { 
-              ...article, 
-              comments: article.comments.map(comment => 
-                comment.commentId === commentId 
-                  ? { ...comment, content: editedCommentContent }
-                  : comment
-              )
-            } 
-          : article
-      )
-    );
+    try {
+      const token = localStorage.getItem("token");
+      
+      try {
+        const response = await fetch(`http://localhost:4000/user-api/comments/${commentId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ content: editedCommentContent }),
+        });
 
-    // Exit edit mode
-    setEditingCommentId(null);
-    setEditedCommentContent("");
-    
-    console.log("Comment updated in local state");
+        if (!response.ok) {
+          if (response.status === 401 || response.status === 403) {
+            handleApiAuthError();
+            throw new Error("Session expired. Please log in again.");
+          }
+          throw new Error("Failed to update comment");
+        }
+
+        // Update was successful in the backend
+      } catch (apiError) {
+        console.error("API error:", apiError);
+        
+        // Check if this was an auth error
+        if (apiError.message.includes("Session expired")) {
+          // Already handled by handleApiAuthError
+          throw apiError;
+        }
+        
+        // Continue with local update even if API fails
+        console.log("Updating comment in local state only");
+      }
+      
+      // Update local state
+      setArticles(prevArticles => 
+        prevArticles.map(article => 
+          article.articleId === articleId 
+            ? { 
+                ...article, 
+                comments: article.comments.map(comment => 
+                  comment.commentId === commentId 
+                    ? { ...comment, content: editedCommentContent }
+                    : comment
+                )
+              } 
+            : article
+        )
+      );
+
+      // Exit edit mode
+      setEditingCommentId(null);
+      setEditedCommentContent("");
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
-  // Delete comment - Client-side only version
+  // Delete comment
   const handleDeleteComment = async (articleId, commentId) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this comment?");
     if (!confirmDelete) return;
     
-    // Skip API call and just update local state
-    setArticles(prevArticles => 
-      prevArticles.map(article => 
-        article.articleId === articleId 
-          ? { 
-              ...article, 
-              comments: article.comments.filter(comment => comment.commentId !== commentId)
-            } 
-          : article
-      )
-    );
-    
-    console.log("Comment deleted from local state");
+    try {
+      const token = localStorage.getItem("token");
+      
+      try {
+        const response = await fetch(`http://localhost:4000/user-api/comments/${commentId}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          if (response.status === 401 || response.status === 403) {
+            handleApiAuthError();
+            throw new Error("Session expired. Please log in again.");
+          }
+          throw new Error("Failed to delete comment");
+        }
+
+        // Delete was successful in the backend
+      } catch (apiError) {
+        console.error("API error:", apiError);
+        
+        // Check if this was an auth error
+        if (apiError.message.includes("Session expired")) {
+          // Already handled by handleApiAuthError
+          throw apiError;
+        }
+        
+        // Continue with local deletion even if API fails
+        console.log("Deleting comment from local state only");
+      }
+      
+      // Update local state
+      setArticles(prevArticles => 
+        prevArticles.map(article => 
+          article.articleId === articleId 
+            ? { 
+                ...article, 
+                comments: article.comments.filter(comment => comment.commentId !== commentId)
+              } 
+            : article
+        )
+      );
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   // Helper function to check if comment belongs to current user

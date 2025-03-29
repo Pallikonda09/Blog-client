@@ -249,31 +249,7 @@ const AuthorDashboard = () => {
                 ) : stats.popularArticles.length > 0 ? (
                   <div className="table-responsive">
                     <table className="table table-hover">
-                      {/* <thead>
-                        <tr>
-                          <th>Title</th>
-                          <th>Published</th>
-                          <th>Views</th>
-                          <th>Actions</th>
-                        </tr>
-                      </thead> */}
-                      {/* <tbody>
-                        {stats.popularArticles.map((article, index) => (
-                          <tr key={index}>
-                            <td>{article.title}</td>
-                            <td>{new Date(article.publishedAt).toLocaleDateString()}</td>
-                            <td>{article.views}</td>
-                            <td>
-                              <Link to={`/author-dashboard/article/:articleId/${article.slug}`} className="btn btn-sm btn-outline-primary me-2">
-                                <i className="bi bi-eye me-1"></i> View
-                              </Link>
-                              <Link to={`/edit-article/${article.id}`} className="btn btn-sm btn-outline-secondary">
-                                <i className="bi bi-pencil me-1"></i> Edit
-                              </Link>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody> */}
+                    
                     </table>
                   </div>
                 ) : (

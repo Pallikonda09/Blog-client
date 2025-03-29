@@ -128,6 +128,13 @@
 // export const { logout } = authSlice.actions;
 // export default authSlice.reducer;
 
+
+
+
+
+
+
+
 import { createSlice } from '@reduxjs/toolkit';
 import { loginUser, loginAuthor } from '../thunks/authThunk';
 
@@ -177,3 +184,82 @@ const authSlice = createSlice({
 export const { logout } = authSlice.actions;
 export default authSlice.reducer;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import { createSlice } from '@reduxjs/toolkit';
+// import { loginUser, loginAuthor } from '../thunks/authThunk';
+
+// // Function to safely parse JSON from localStorage
+// const safeParse = (key) => {
+//   try {
+//     const item = localStorage.getItem(key);
+//     return item ? JSON.parse(item) : null;
+//   } catch (error) {
+//     console.error(`Error parsing localStorage key "${key}":`, error);
+//     return null;
+//   }
+// };
+
+// // Initial state
+// const initialState = {
+//   user: safeParse('user'),  // Load user from localStorage safely
+//   author: safeParse('author'),  // Load author from localStorage safely
+//   token: localStorage.getItem('token') || null,  // Load token from localStorage
+//   isAuthenticated: !!localStorage.getItem('token'),  // Check if token exists
+//   loading: false,
+//   error: null,
+// };
+
+// const authSlice = createSlice({
+//   name: 'auth',
+//   initialState,
+//   reducers: {
+//     logout: (state) => {
+//       state.user = null;
+//       state.author = null;
+//       state.token = null;
+//       state.isAuthenticated = false;
+//       state.error = null;
+
+//       // Clear only auth-related keys, not entire localStorage
+//       localStorage.removeItem('user');
+//       localStorage.removeItem('author');
+//       localStorage.removeItem('token');
+//     },
+//   },
+//   extraReducers: (builder) => {
+//     builder
+//       // Handle user login
+//       .addCase(loginUser.fulfilled, (state, action) => {
+//         state.isAuthenticated = true;
+//         state.user = action.payload.user;
+//         state.token = action.payload.token;
+
+//         localStorage.setItem('user', JSON.stringify(action.payload.user));
+//         localStorage.setItem('token', action.payload.token);
+//       })
+//       // Handle author login
+//       .addCase(loginAuthor.fulfilled, (state, action) => {
+//         state.isAuthenticated = true;
+//         state.author = action.payload.author;
+//         state.token = action.payload.token;
+
+//         localStorage.setItem('author', JSON.stringify(action.payload.author));
+//         localStorage.setItem('token', action.payload.token);
+//       });
+//   },
+// });
+
+// export const { logout } = authSlice.actions;
+// export default authSlice.reducer;
