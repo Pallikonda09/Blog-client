@@ -238,7 +238,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 // API base URL - can be changed for different environments
-const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:4000";
+const API_BASE_URL = process.env.REACT_APP_API_URL || "https://blog-backend-5.onrender.com"
 
 function Register() {
   const { register, handleSubmit, reset, watch, formState: { errors } } = useForm();
