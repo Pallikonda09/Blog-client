@@ -28,7 +28,7 @@ function AddArticle() {
         if (!username) return;
 
         const profileRes = await axios.get(
-          `http://localhost:4000/author-api/profile/${username}`,
+          `https://blog-backend-5.onrender.com/author-api/profile/${username}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
@@ -112,7 +112,7 @@ function AddArticle() {
     article.isDraft = false;
 
     try {
-      const res = await axiosWithToken.post("/author-api/add-article", article);
+      const res = await axiosWithToken.post("https://blog-backend-5.onrender.com/author-api/add-article", article);
       setSuccess(res.data.message || "Article published successfully!");
       reset(); // Clear the form
     } catch (error) {

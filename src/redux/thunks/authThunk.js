@@ -84,139 +84,94 @@ export const loginAuthor = createAsyncThunk(
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// In your authThunk.js file
 
 // import { createAsyncThunk } from '@reduxjs/toolkit';
 // import axios from 'axios';
 
-// // Thunk for user login
 // export const loginUser = createAsyncThunk(
 //   'auth/loginUser',
-//   async ({ username, password, userType }, { rejectWithValue }) => {
+//   async (userData, { rejectWithValue }) => {
 //     try {
-//       const response = await axios.post('http://localhost:4000/user-api/login', {
-//         username,
-//         password,
-//         userType,
-//       });
+//       const response = await axios.post('https://blog-backend-5.onrender.com/api/user/login', userData);
       
-//       console.log("User login response:", response.data);
-      
-//       // Validate response data
-//       if (!response.data.token) {
-//         throw new Error('Token not provided by the server');
-//       }
-      
-//       // Extract user data, handling different response structures
-//       const userData = response.data.user || {
-//         username: response.data.username,
-//         userId: response.data.userId || response.data._id
+//       // Store user type in response for the reducer to use
+//       return {
+//         ...response.data,
+//         userType: 'user'
 //       };
-      
-//       if (!userData.username) {
-//         throw new Error('User data not provided correctly by the server');
-//       }
-      
-//       // Store authentication data in localStorage
-//       localStorage.setItem('token', response.data.token);
-//       localStorage.setItem('user', JSON.stringify(userData));
-      
-//       return response.data;
 //     } catch (error) {
-//       console.error("User login error:", error.response?.data || error.message || error);
-//       return rejectWithValue(error.response?.data || { message: error.message || 'An error occurred' });
+//       return rejectWithValue(error.response?.data || { message: "Login failed" });
 //     }
 //   }
 // );
 
-// // Thunk for author login
 // export const loginAuthor = createAsyncThunk(
 //   'auth/loginAuthor',
-//   async ({ username, password, userType }, { rejectWithValue }) => {
+//   async (authorData, { rejectWithValue }) => {
 //     try {
-//       const response = await axios.post('http://localhost:4000/author-api/login', {
-//         username,
-//         password,
-//         userType,
-//       });
+//       const response = await axios.post('https://blog-backend-5.onrender.com/author-api/login', authorData);
       
-//       console.log("Author login response:", response.data);
-      
-//       // Validate response data
-//       if (!response.data.token) {
-//         throw new Error('Token not provided by the server');
-//       }
-      
-//       // Extract user data, handling different response structures
-//       const userData = response.data.user || {
-//         username: response.data.username,
-//         userId: response.data.userId || response.data._id
+//       // Store user type in response for the reducer to use
+//       return {
+//         ...response.data,
+//         userType: 'author'
 //       };
-      
-//       if (!userData.username) {
-//         throw new Error('User data not provided correctly by the server');
-//       }
-      
-//       // Store authentication data in localStorage
-//       localStorage.setItem('token', response.data.token);
-//       localStorage.setItem('user', JSON.stringify(userData));
-      
-//       return response.data;
 //     } catch (error) {
-//       console.error("Author login error:", error.response?.data || error.message || error);
-//       return rejectWithValue(error.response?.data || { message: error.message || 'An error occurred' });
+//       return rejectWithValue(error.response?.data || { message: "Login failed" });
 //     }
 //   }
 // );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

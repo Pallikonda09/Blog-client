@@ -333,7 +333,7 @@ function ArticleDetail() {
       
       try {
         const response = await axiosWithToken.put(
-          `http://localhost:4000/author-api/article/${state.articleId}`,
+          `https://blog-backend-5.onrender.com/author-api/article/${state.articleId}`,
           articleData,
           { signal: controllerRef.current.signal }
         );
@@ -421,7 +421,7 @@ function ArticleDetail() {
       
       try {
         const response = await axiosWithToken.delete(
-          `http://localhost:4000/author-api/article/${state.articleId}`,
+          `https://blog-backend-5.onrender.com/author-api/article/${state.articleId}`,
           { signal: controllerRef.current.signal }
         );
         

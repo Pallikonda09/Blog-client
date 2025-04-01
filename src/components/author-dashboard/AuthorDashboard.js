@@ -46,7 +46,7 @@ const AuthorDashboard = () => {
       }
       
       const res = await axios.get(
-        `http://localhost:4000/author-api/advanced-stats/${username}?timeFilter=${timeFilter}`,
+        `https://blog-backend-5.onrender.com/author-api/advanced-stats/${username}?timeFilter=${timeFilter}`,
         { 
           headers: { 
             "Content-Type": "application/json",

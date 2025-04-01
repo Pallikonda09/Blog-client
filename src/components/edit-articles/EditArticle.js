@@ -38,7 +38,7 @@ function EditArticle() {
       setLoading(true); // Show loading state
   
       let res = await axios.put(
-        "http://localhost:4000/author-api/article",
+        "https://blog-backend-5.onrender.com/author-api/article",
         modifiedArticle,
         {
           headers: {

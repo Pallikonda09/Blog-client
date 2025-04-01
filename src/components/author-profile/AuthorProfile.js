@@ -52,7 +52,7 @@ const AuthorProfile = () => {
 
         // Fetch Author Profile
         const profileRes = await axios.get(
-          `http://localhost:4000/author-api/profile/${username}`,
+          `https://blog-backend-5.onrender.com/author-api/profile/${username}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
@@ -96,7 +96,7 @@ const AuthorProfile = () => {
       setSaving(true);
       const token = localStorage.getItem("token");
       const response = await axios.post(
-        `http://localhost:4000/author-api/upload-avatar/${profile.username}`,
+        `https://blog-backend-5.onrender.com/author-api/upload-avatar/${profile.username}`,
         formData,
         { headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" } }
       );
@@ -132,7 +132,7 @@ const AuthorProfile = () => {
       setSaving(true);
       const token = localStorage.getItem("token");
       await axios.put(
-        `http://localhost:4000/author-api/profile/${profile.username}`,
+        `https://blog-backend-5.onrender.com/author-api/profile/${profile.username}`,
         formData,
         { headers: { Authorization: `Bearer ${token}` } }
       );

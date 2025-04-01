@@ -254,7 +254,7 @@ function ArticlesByAuthor() {
         }
         
         const res = await axios.get(
-          `http://localhost:4000/author-api/articles-by-author/${username}`
+          `https://blog-backend-5.onrender.com/author-api/articles-by-author/${username}`
         );
         
         const articles = res.data.articles || [];
@@ -299,7 +299,7 @@ function ArticlesByAuthor() {
         delete articleToUpdate._id;
         
         const response = await axiosWithToken.put(
-          `http://localhost:4000/author-api/article/${article.articleId}`,
+          `https://blog-backend-5.onrender.com/author-api/article/${article.articleId}`,
           articleToUpdate
         );
         

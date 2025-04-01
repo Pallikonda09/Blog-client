@@ -10,7 +10,7 @@
 // import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 // // API base URL - can be changed for different environments
-// const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:4000";
+// const API_BASE_URL = process.env.REACT_APP_API_URL || "https://blog-backend-5.onrender.com";
 
 // function Register() {
 //   const { register, handleSubmit, reset, watch, formState: { errors } } = useForm();
@@ -32,7 +32,7 @@
 //         headers: { "Content-Type": "application/json" },
 //       });
 
-//       const successMessage = userType === "author" ? 
+//       const successMessage = userType === "user" ? 
 //         "Author Registration Success" : 
 //         "User Registration Success";
 
@@ -266,7 +266,7 @@ function Register() {
 
       if (res.data.message === successMessage) {
         // Display success toast with "colored" theme to ensure green color
-        toast.success(`${userType === "author" ? "Author" : "User"} registered successfully!`, { 
+        toast.success(`${userType === "author" ? "Author" : "user"} registered successfully!`, { 
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -466,3 +466,7 @@ function Register() {
 }
 
 export default Register;
+
+
+
+
